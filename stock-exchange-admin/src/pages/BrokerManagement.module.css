@@ -1,0 +1,106 @@
+.container {
+  padding: 20px 40px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.header {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 30px;
+}
+.addForm {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 30px;
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+}
+.addForm input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  flex-grow: 1;
+}
+.addForm button {
+  padding: 10px 20px;
+}
+.brokersTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+.brokersTable th,
+.brokersTable td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+.brokersTable th {
+  background-color: #f2f2f2;
+}
+.brokersTable td:last-child {
+  width: 220px;
+}
+.brokersTable tr .actions {
+  display: flex;
+  gap: 8px;
+}
+.actionButton {
+  flex-grow: 1;
+  padding: 10px 15px;
+  font-size: 0.95rem;
+  border-radius: 5px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+  }
+  .header {
+    font-size: 2rem;
+  }
+  .brokersTable thead {
+    display: none;
+  }
+  .brokersTable tr {
+    display: block;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  .brokersTable td {
+    display: block;
+    text-align: right;
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50%;
+  }
+  .brokersTable td:last-child {
+    border-bottom: none;
+    width: auto;
+    padding-left: 0;
+    text-align: center;
+  }
+  .brokersTable td:before {
+    content: attr(data-label);
+    position: absolute;
+    left: 10px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    text-align: left;
+    font-weight: bold;
+  }
+  .brokersTable tr .actions {
+    flex-direction: column;
+  }
+  .brokersTable td:last-child .actions {
+    padding-left: 50%;
+    flex-direction: column;
+  }
+}

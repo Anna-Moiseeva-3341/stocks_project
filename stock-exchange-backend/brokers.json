@@ -1,0 +1,96 @@
+[
+  {
+    "id": 1,
+    "name": "Peter Lynch",
+    "balance": 14368.73,
+    "portfolio": [
+      {
+        "ticker": "QCOM",
+        "quantity": 4,
+        "purchasePrice": 170
+      },
+      {
+        "ticker": "AMZN",
+        "quantity": 5,
+        "purchasePrice": 223.185
+      },
+      {
+        "ticker": "MSFT",
+        "quantity": 10,
+        "purchasePrice": 368.255
+      },
+      {
+        "ticker": "MSFT",
+        "quantity": 10,
+        "purchasePrice": 391.3
+      },
+      {
+        "ticker": "MSFT",
+        "quantity": 10,
+        "purchasePrice": 421.28
+      },
+      {
+        "ticker": "MSFT",
+        "quantity": 10,
+        "purchasePrice": 444.39
+      },
+      {
+        "ticker": "MSFT",
+        "quantity": 10,
+        "purchasePrice": 434.6
+      },
+      {
+        "ticker": "MSFT",
+        "quantity": 10,
+        "purchasePrice": 434.085
+      },
+      {
+        "ticker": "MSFT",
+        "quantity": 10,
+        "purchasePrice": 434.6
+      },
+      {
+        "ticker": "MSFT",
+        "quantity": 10,
+        "purchasePrice": 425.32
+      },
+      {
+        "ticker": "MSFT",
+        "quantity": 10,
+        "purchasePrice": 416.87
+      },
+      {
+        "ticker": "MSFT",
+        "quantity": 10,
+        "purchasePrice": 451.01
+      },
+      {
+        "ticker": "QCOM",
+        "quantity": 1,
+        "purchasePrice": 167.62
+      },
+      {
+        "ticker": "AMZN",
+        "quantity": 2,
+        "purchasePrice": 215.96
+      },
+      {
+        "ticker": "QCOM",
+        "quantity": 1,
+        "purchasePrice": 174.98
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Warren Buffett",
+    "balance": 10,
+    "portfolio": []
+  },
+  {
+    "id": 3,
+    "name": "New Name",
+    "balance": 0,
+    "portfolio": []
+  }
+]

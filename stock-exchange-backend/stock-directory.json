@@ -1,0 +1,10 @@
+[
+  { "ticker": "AAPL", "companyName": "Apple, Inc." },
+  { "ticker": "MSFT", "companyName": "Microsoft, Inc." },
+  { "ticker": "SBUX", "companyName": "Starbucks, Inc." },
+  { "ticker": "CSCO", "companyName": "Cisco Systems, Inc." },
+  { "ticker": "QCOM", "companyName": "QUALCOMM Incorporated" },
+  { "ticker": "AMZN", "companyName": "Amazon.com, Inc." },
+  { "ticker": "TSLA", "companyName": "Tesla, Inc." },
+  { "ticker": "AMD", "companyName": "Advanced Micro Devices, Inc." }
+]
