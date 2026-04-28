@@ -82,7 +82,7 @@ npm run dev
 
 ```
 cd stock-broker-client
-node e2e.test.cjs
+node tests/e2e.test.js
 ```
 
 Тест проверяет:

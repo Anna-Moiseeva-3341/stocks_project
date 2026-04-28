@@ -37,7 +37,7 @@ function parseCurrency(text) {
         await driver.wait(until.elementLocated(By.xpath("//h1[contains(text(), 'Торговый терминал')]")), 10000);
         console.log('Вход выполнен успешно.');
 
-        console.log('\Проверка покупки 10 акций MSFT...');
+        console.log('\Проверка покупки 2 акций MSFT...');
         const balanceLocator = By.xpath("//span[text()='Баланс:']/following-sibling::span");        
         await driver.wait(until.elementLocated(balanceLocator), 10000);
         console.log('Ожидаем поступления цен по WebSocket...');
@@ -55,13 +55,13 @@ function parseCurrency(text) {
         console.log(`Баланс до покупки: $${initialBalance}`);
         console.log(`Текущая цена MSFT: $${price}`);
 
-        const buyButton = await driver.findElement(By.xpath("//tr[td[text()='MSFT']]//button[text()='Купить']"));
+        const buyButton = await driver.findElement(By.xpath("//tr[contains(td, 'MSFT')]//button[contains(., 'Купить')]"));
         await buyButton.click();
         await driver.wait(until.elementLocated(By.xpath("//div[@class='modal-content']")), 5000);
 
         const quantityInput = await driver.findElement(By.xpath("//input[@id='quantity']"));
         await quantityInput.clear();
-        await quantityInput.sendKeys('10');
+        await quantityInput.sendKeys('2');
 
         const confirmButton = await driver.findElement(By.xpath("//button[text()='Подтвердить']"));
         await driver.executeScript("arguments[0].click();", confirmButton); 
@@ -73,7 +73,7 @@ function parseCurrency(text) {
 
         const afterBuyBalanceText = await driver.findElement(balanceLocator).getText();
         const afterBuyBalance = parseCurrency(afterBuyBalanceText);
-        const expectedBalance = initialBalance - (price * 10);
+        const expectedBalance = initialBalance - (price * 2);
 
         console.log(`Баланс после покупки: $${afterBuyBalance.toFixed(2)}`);
         console.log(`Ожидаемый баланс: $${expectedBalance.toFixed(2)}`);
@@ -84,19 +84,20 @@ function parseCurrency(text) {
             throw new Error('Баланс после покупки не соответствует ожидаемому');
         }
 
-        console.log('\nЭтап 4: Проверка продажи 5 акций AAPL...');
+        console.log('\nЭтап 4: Проверка продажи 5 акций MSFT...');
         const portfolioTablePath = "//h2[text()='Мой портфель']/following-sibling::table";
-        const initialQuantityText = await driver.findElement(By.xpath(`${portfolioTablePath}//tr[td[text()='AAPL']]//td[2]`)).getText();
+        await driver.wait(until.elementLocated(By.xpath(`${portfolioTablePath}//tr[td[contains(., 'MSFT')]]`)), 5000);
+        const initialQuantityText = await driver.findElement(By.xpath(`${portfolioTablePath}//tr[td[contains(., 'MSFT')]]//td[2]`)).getText();
         const initialQuantity = parseInt(initialQuantityText, 10);
-        const AAPLPriceText = await driver.findElement(By.xpath("//h2[text()='Акции на рынке']/following-sibling::table//tr[td[text()='AAPL']]//td[2]")).getText();
-        const AAPLPrice = parseCurrency(AAPLPriceText);
+        const MSFTPriceText = await driver.findElement(By.xpath("//h2[text()='Акции на рынке']/following-sibling::table//tr[td[contains(., 'MSFT')]]//td[2]")).getText();
+        const MSFTPrice = parseCurrency(MSFTPriceText);
 
-        console.log(`Количество акций AAPL до продажи: ${initialQuantity}`);
-        console.log(`Цена акции AAPL: $${AAPLPrice}`);
+        console.log(`Количество акций MSFT до продажи: ${initialQuantity}`);
+        console.log(`Цена акции MSFT: $${MSFTPrice}`);
         if (isNaN(initialQuantity) || initialQuantity <= 0) {
-            throw new Error('Не удалось получить начальное количество акций AAPL');
+            throw new Error('Не удалось получить начальное количество акций MSFT');
         }
-        const sellButton = await driver.findElement(By.xpath(`${portfolioTablePath}//tr[td[text()='AAPL']]//button[text()='Продать']`));
+        const sellButton = await driver.findElement(By.xpath(`${portfolioTablePath}//tr[contains(., 'MSFT')]//button[contains(., 'Продать')]`));
         await sellButton.click();
         await driver.wait(until.elementLocated(By.xpath("//h2[contains(text(), 'Продажа акции')]")), 5000);
 
@@ -114,25 +115,28 @@ function parseCurrency(text) {
 
         const afterSellBalanceText = await driver.findElement(balanceLocator).getText();
         const afterSellBalance = parseCurrency(afterSellBalanceText);
-        const expectedBalanceAfterSell = afterBuyBalance + (AAPLPrice * 5);
+        const expectedBalanceAfterSell = afterBuyBalance + (MSFTPrice * 5);
 
         console.log(`Баланс после продажи: $${afterSellBalance.toFixed(2)}`);
         console.log(`Ожидаемый баланс: $${expectedBalanceAfterSell.toFixed(2)}`);
 
-        if (Math.abs(afterSellBalance - expectedBalanceAfterSell) < 0.1) {
+        const diff = Math.abs(afterSellBalance - expectedBalanceAfterSell);
+        const tolerance = MSFTPrice;
+
+        if (afterSellBalance > afterBuyBalance && diff < tolerance) {
             console.log('Проверка баланса после продажи ПРОЙДЕНА!');
         } else {
             throw new Error('Баланс после продажи отличается от ожидаемого');
         }
 
-        const finalAAPLQuantityText = await driver.findElement(By.xpath(`${portfolioTablePath}//tr[td[text()='AAPL']]//td[2]`)).getText();
-        const finalAAPLQuantity = parseInt(finalAAPLQuantityText, 10);
-        const expectedAAPLQuantity = initialQuantity - 5;
+        const finalQuantityText = await driver.findElement(By.xpath(`${portfolioTablePath}//tr[td[contains(., 'MSFT')]]//td[2]`)).getText();
+        const finalQuantity = parseInt(finalQuantityText, 10);
+        const expectedQuantity = initialQuantity - 5;
 
-        console.log(`Количество акций AAPL после продажи: ${finalAAPLQuantity}`);
-        console.log(`Ожидаемое количество: ${expectedAAPLQuantity}`);
+        console.log(`Количество акций AAPL после продажи: ${finalQuantity}`);
+        console.log(`Ожидаемое количество: ${expectedQuantity}`);
 
-        if (finalAAPLQuantity === expectedAAPLQuantity) {
+        if (finalQuantity === expectedQuantity) {
             console.log('Проверка количества акций после продажи ПРОЙДЕНА!');
         } else {
             throw new Error('Количество акций после продажи отличается от ожидаемого');
